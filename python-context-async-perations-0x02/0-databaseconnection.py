@@ -1,25 +1,24 @@
+#!/usr/bin/env python3
 import sqlite3
 
 class DatabaseConnection:
-    def __init__(self, db_file):
-        self.db_file = db_file
-        self.conn = None
+    def __init__(self, db_name):
+        self.db_name = db_name
+        self.connection = None
 
     def __enter__(self):
-        self.conn = sqlite3.connect(self.db_file)
-        return self.conn
+        self.connection = sqlite3.connect(self.db_name)
+        return self.connection
 
     def __exit__(self, exc_type, exc_val, exc_tb):
-        if self.conn:
-            self.conn.close()
-
+        if self.connection:
+            self.connection.close()
 
 if __name__ == "__main__":
-    db_file = "test.db"
-
-    with DatabaseConnection(db_file) as conn:
+    with DatabaseConnection("test.db") as conn:
         cursor = conn.cursor()
+        cursor.execute("CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY, name TEXT)")
+        cursor.execute("INSERT INTO users (name) VALUES ('Daniel'), ('Alice'), ('John')")
+        conn.commit()
         cursor.execute("SELECT * FROM users")
-        rows = cursor.fetchall()
-        for row in rows:
-            print(row)
+        print(cursor.fetchall())
