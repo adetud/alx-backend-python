@@ -1,7 +1,6 @@
 import sqlite3
 
 class DatabaseConnection:
-    """Custom context manager for SQLite database connection."""
     def __init__(self, db_file):
         self.db_file = db_file
         self.conn = None
@@ -16,7 +15,7 @@ class DatabaseConnection:
 
 
 if __name__ == "__main__":
-    db_file = "test.db"  # the automated checker may have this DB ready
+    db_file = "test.db"
 
     with DatabaseConnection(db_file) as conn:
         cursor = conn.cursor()
