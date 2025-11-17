@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 """
 Task 3: Concurrent Asynchronous Database Queries
-Uses aiosqlite + asyncio.gather to run queries concurrently
 """
 
 import asyncio
@@ -27,15 +26,13 @@ async def async_fetch_older_users(db_name):
 
 
 async def fetch_concurrently():
-    """Run both queries concurrently using asyncio.gather"""
+    """Run both queries concurrently"""
     db_name = "my_database.db"
 
-    results = await asyncio.gather(
+    all_users, older_users = await asyncio.gather(
         async_fetch_users(db_name),
         async_fetch_older_users(db_name)
     )
-
-    all_users, older_users = results
 
     print("All Users:")
     for row in all_users:
