@@ -71,6 +71,7 @@ class TestGithubOrgClient(unittest.TestCase):
 class TestIntegrationGithubOrgClient(unittest.TestCase):
     """Integration tests for GithubOrgClient.public_repos using fixtures."""
 
+
     @classmethod
     def setUpClass(cls):
         """Mock requests.get with side_effect for different URLs."""
@@ -85,6 +86,23 @@ class TestIntegrationGithubOrgClient(unittest.TestCase):
             return cls.repos_payload
 
         mock_get.return_value.json.side_effect = json_side_effect
+    
+def test_public_repos(self):
+    """Test public_repos returns expected list of repo names from fixtures."""
+    client = GithubOrgClient("google")
+    result = client.public_repos
+    self.assertEqual(result, self.expected_repos)
+
+def test_public_repos_with_license(self):
+    """Test public_repos filtered by license returns expected list from fixtures."""
+    client = GithubOrgClient("google")
+    result = [
+        repo for repo in client.public_repos
+        if GithubOrgClient.has_license(
+            {"license": {"key": "apache-2.0"}}, "apache-2.0"
+        )
+    ]
+    self.assertEqual(result, self.apache2_repos)
 
     @classmethod
     def tearDownClass(cls):
