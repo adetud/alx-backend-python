@@ -1,7 +1,13 @@
 from rest_framework import serializers
-from .models import Chat
+from .models import Conversation, Message
 
-class ChatSerializer(serializers.ModelSerializer):
+class ConversationSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Chat
-        fields = ['id', 'title', 'created_at']
+        model = Conversation
+        fields = '__all__'
+
+
+class MessageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Message
+        fields = '__all__'

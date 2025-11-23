@@ -1,7 +1,6 @@
-from rest_framework import generics
-from .models import Chat
-from .serializers import ChatSerializer
+from rest_framework.views import APIView
+from rest_framework.response import Response
 
-class ChatListCreateAPIView(generics.ListCreateAPIView):
-    queryset = Chat.objects.all()
-    serializer_class = ChatSerializer
+class ChatListCreateAPIView(APIView):
+    def get(self, request):
+        return Response({"message": "Hello from chats API!"})
