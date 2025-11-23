@@ -2,11 +2,13 @@ from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from .views import ConversationViewSet, MessageViewSet, UserListCreateAPIView
 
+# Create a router and register our viewsets
 router = DefaultRouter()
 router.register(r'conversations', ConversationViewSet, basename='conversation')
 router.register(r'messages', MessageViewSet, basename='message')
+router.register(r'users', UserListCreateAPIView, basename='user')
 
+# The API URLs are now determined automatically by the router
 urlpatterns = [
-    path('users/', UserListCreateAPIView.as_view(), name='user-list-create'),
     path('', include(router.urls)),
 ]
