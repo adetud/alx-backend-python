@@ -1,8 +1,12 @@
-from django.urls import path
-from . import views
+from django.urls import path, include
+from rest_framework.routers import DefaultRouter
+from .views import ConversationViewSet, MessageViewSet, UserListCreateAPIView
+
+router = DefaultRouter()
+router.register(r'conversations', ConversationViewSet, basename='conversation')
+router.register(r'messages', MessageViewSet, basename='message')
 
 urlpatterns = [
-    path('users/', views.UserListCreateAPIView.as_view(), name='user-list-create'),
-    path('conversations/', views.ConversationListCreateAPIView.as_view(), name='conversation-list-create'),
-    path('messages/', views.MessageListCreateAPIView.as_view(), name='message-list-create'),
+    path('users/', UserListCreateAPIView.as_view(), name='user-list-create'),
+    path('', include(router.urls)),
 ]
